@@ -3,11 +3,11 @@ namespace: /monk-hasura
 hasura:
   metadata:
     defines: metadata
-    name: Growthbook
-    description: GrowthBook is an open source platform that gives any company the power of a customized feature flagging and A/B testing system.
-    website: https://www.growthbook.io/
+    name: Hasura
+    description: Hasura gives you instant GraphQL &amp; REST APIs on new &amp; existing data sources. Connect Hasura to your data &amp; get APIs in under a minute.
+    website: https://hasura.io
     publisher: monk.io
-    icon: https://uploads-ssl.webflow.com/62019b0bccbb27eb8ff291bb/62019c940010d720321b0356_growth-book-logo-white.svg
+    icon: https://hasura.io/brand-assets/hasura-logo-primary-dark.svg
   defines: runnable
   variables:
     hasura_graphql_console:
