@@ -1,0 +1,101 @@
+namespace: /monk-hasura
+
+hasura:
+  metadata:
+    defines: metadata
+    name: Growthbook
+    description: GrowthBook is an open source platform that gives any company the power of a customized feature flagging and A/B testing system.
+    website: https://www.growthbook.io/
+    publisher: monk.io
+    icon: https://uploads-ssl.webflow.com/62019b0bccbb27eb8ff291bb/62019c940010d720321b0356_growth-book-logo-white.svg
+  defines: runnable
+  variables:
+    hasura_graphql_console:
+      env: HASURA_GRAPHQL_ENABLE_CONSOLE
+      type: bool
+      value: <- `${hasura_graphql_console}`
+    hasura_graphql_dev_mode:
+      env: HASURA_GRAPHQL_DEV_MODE
+      type: bool
+      value: <- `${hasura_graphql_dev_mode}`
+    hasura_graphql_log_types:
+      env: HASURA_GRAPHQL_ENABLED_LOG_TYPES
+      type: string
+      value: <- `${hasura_graphql_enabled_log_types}`
+    db_hasura_host:
+      type: string
+      value: <- get-hostname("monk-hasura/hasura-db", "postgres") split(".dns.podman") join("")
+    db_hasura:
+      env: HASURA_GRAPHQL_METADATA_DATABASE_URL
+      type: string
+      value: <- `postgres://${database_user}:${database_password}@${db_hasura_host}:5432/${database_name}`
+    db_host:
+      type: string
+      value: <- get-hostname("monk-hasura/hasura-db", "postgres") split(".dns.podman") join("")
+    db:
+      env: PG_DATABASE_URL
+      type: string
+      value: <- `postgres://${database_user}:${database_password}@${db_host}:5432/${database_name}`
+    hasura_admin_secret:
+      env: HASURA_GRAPHQL_ADMIN_SECRET
+      type: string
+      value: monk
+    volume_local:
+      type: string
+      value: <- `${monk-volume-path}/growthbook`
+  containers:
+    monk-hasura:
+      image: 'hasura/graphql-engine'
+      ports:
+        - <- `0.0.0.0:${hasura_port}:8080`
+      paths:
+        - <- `${volume_local}:/usr/local/src/app/packages/back-end/uploads`
+  depends:
+    wait-for:
+      runnables:
+        - monk-hasura/hasura-db
+      timeout: 30
+
+hasura-db:
+  defines: runnable
+  variables:
+    defines: variables
+    image-tag:
+      type: string
+      value: latest
+    db-password:
+      env: POSTGRES_PASSWORD
+      value: <- `${database_password}`
+      type: string
+    db-user:
+      env: POSTGRES_USER
+      value: <- `${database_user}`
+      type: string
+    db-name:
+      env: POSTGRES_DB
+      value: <- `${database_name}`
+      type: string
+    db-port:
+      value: <- `${database_port}`
+      type: int
+    db-trust:
+      env: POSTGRES_HOST_AUTH_METHOD
+      value: trust
+  containers:
+    postgres:
+      image-tag: <- `${image-tag}`
+      # paths:
+      # - <- `${moncc-volume-path}/db_data:/var/lib/postgresql/data`
+      image: postgres
+      ports:
+        - <- `0.0.0.0:${db-port}:5432`
+  checks:
+    readiness:
+      code: |
+        exec("postgres", "pg_isready") "accepting connections" contains?
+      period: 15
+      initialDelay: 15
+  actions:
+    show-status:
+      code: exec("postgres", "pg_isready")
+      description: postgres show status

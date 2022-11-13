@@ -1,0 +1,2 @@
+REPO hasura
+LOAD hasura.yml stack.yml

@@ -1,0 +1,35 @@
+namespace: /monk-hasura
+
+stack:
+  defines: process-group
+  runnable-list:
+    - monk-hasura/hasura-db
+    - monk-hasura/hasura
+  variables:
+    hasura_graphql_console:
+      type: boolean
+      value: true
+    hasura_graphql_dev_mode:
+      type: boolean
+      value: true
+    hasura_graphql_enabled_log_types:
+      type: string
+      value: startup, http-log, webhook-log, websocket-log, query-log
+    hasura_graphql_admin_secret:
+      type: string
+      value: monk
+    database_name:
+      type: string
+      value: monk
+    database_password:
+      type: string
+      value: monk
+    database_user:
+      type: string
+      value: monk
+    database_port:
+      type: int
+      value: 5432
+    db_password:
+      type: string
+      value: monk
