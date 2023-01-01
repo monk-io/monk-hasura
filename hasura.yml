@@ -1,4 +1,4 @@
-namespace: /monk-hasura
+namespace: monk-hasura
 
 hasura:
   metadata:
@@ -9,14 +9,18 @@ hasura:
     publisher: monk.io
     icon: https://hasura.io/brand-assets/hasura-logo-primary-dark.svg
   defines: runnable
+  connections:
+    database:
+      runnable: monk-hasura/hasura-db
+      service: hasura-db-svc
   variables:
-    hasura_graphql_console:
+    hasura_graphql_cnsl:
       env: HASURA_GRAPHQL_ENABLE_CONSOLE
-      type: bool
+      type: string
       value: <- `${hasura_graphql_console}`
-    hasura_graphql_dev_mode:
+    hasura_graphql_dev:
       env: HASURA_GRAPHQL_DEV_MODE
-      type: bool
+      type: string
       value: <- `${hasura_graphql_dev_mode}`
     hasura_graphql_log_types:
       env: HASURA_GRAPHQL_ENABLED_LOG_TYPES
@@ -24,14 +28,14 @@ hasura:
       value: <- `${hasura_graphql_enabled_log_types}`
     db_hasura_host:
       type: string
-      value: <- get-hostname("monk-hasura/hasura-db", "postgres") split(".dns.podman") join("")
+      value: <- connection-hostname("database") split(".dns.podman") join("")
     db_hasura:
       env: HASURA_GRAPHQL_METADATA_DATABASE_URL
       type: string
       value: <- `postgres://${database_user}:${database_password}@${db_hasura_host}:5432/${database_name}`
     db_host:
       type: string
-      value: <- get-hostname("monk-hasura/hasura-db", "postgres") split(".dns.podman") join("")
+      value: <- connection-hostname("database") split(".dns.podman") join("")
     db:
       env: PG_DATABASE_URL
       type: string
@@ -55,6 +59,11 @@ hasura:
       runnables:
         - monk-hasura/hasura-db
       timeout: 30
+  services:
+    hasura-svc:
+      container: monk-hasura
+      port: <- `${hasura_port}`
+      protocol: tcp
 
 hasura-db:
   defines: runnable
@@ -99,3 +108,10 @@ hasura-db:
     show-status:
       code: exec("postgres", "pg_isready")
       description: postgres show status
+  services:
+    hasura-db-svc:
+      container: postgres
+      port: 5432
+      protocol: tcp
+
+

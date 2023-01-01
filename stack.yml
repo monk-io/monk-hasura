@@ -1,4 +1,4 @@
-namespace: /monk-hasura
+namespace: monk-hasura
 
 stack:
   defines: process-group
@@ -7,10 +7,10 @@ stack:
     - monk-hasura/hasura
   variables:
     hasura_graphql_console:
-      type: boolean
+      type: string
       value: true
     hasura_graphql_dev_mode:
-      type: boolean
+      type: string
       value: true
     hasura_graphql_enabled_log_types:
       type: string
@@ -33,3 +33,6 @@ stack:
     db_password:
       type: string
       value: monk
+    hasura_port:
+      type: int
+      value: 8080
