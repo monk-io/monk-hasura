@@ -1,10 +1,10 @@
-namespace: monk-hasura
+namespace: hasura
 
 stack:
   defines: process-group
   runnable-list:
-    - monk-hasura/hasura-db
-    - monk-hasura/hasura
+    - hasura/hasura-db
+    - hasura/hasura
   variables:
     hasura_graphql_console:
       type: string

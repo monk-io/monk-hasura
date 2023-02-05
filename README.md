@@ -21,57 +21,57 @@ not connected to cluster
 ## Clone Repository
 
 ```bash
-git clone https://github.com/monk-io/monk-hasura
+git clone https://github.com/monk-io/hasura
 ```
 
 ## Load Template
 
 ```bash
-cd monk-hasura
+cd hasura
 monk load MANIFEST
 ```
 
 ### Let's take a look at the themes I have installed
 
 ```bash
-foo@bar:~$ monk list monk-hasura
+foo@bar:~$ monk list hasura
 ✔ Got the list
 Type      Template               Repository  Version  Tags
-runnable  monk-hasura/hasura     local       -        -
-runnable  monk-hasura/hasura-db  local       -        -
-group     monk-hasura/stack      local       -        -
+runnable  hasura/hasura     local       -        -
+runnable  hasura/hasura-db  local       -        -
+group     hasura/stack      local       -        -
 ```
 
 ## Deploy Stack
 
 ```bash
-foo@bar:~$ monk run monk-hasura/stack
-? Select tag to run [local/monk-hasura/stack] on: monk
-✔ Starting the job: local/monk-hasura/stack... DONE
+foo@bar:~$ monk run hasura/stack
+? Select tag to run [local/hasura/stack] on: monk
+✔ Starting the job: local/hasura/stack... DONE
 ✔ Preparing nodes DONE
 ✔ Checking/pulling images...
 ✔ [================================================] 100% hasura/graphql-engine:latest monk
 ✔ [================================================] 100% postgres:latest monk
 ✔ Checking/pulling images DONE
 ✔ Starting containers DONE
-✔ local/monk-hasura/stack has been already running
+✔ local/hasura/stack has been already running
 
-🔩 templates/local/monk-hasura/stack
+🔩 templates/local/hasura/stack
  └─🧊 Peer monk
-    ├─🔩 templates/local/monk-hasura/hasura
-    │  └─📦 67d75658c522844d9dd7dc06dfcb35bb-monk-hasura-hasura-monk-hasura
+    ├─🔩 templates/local/hasura/hasura
+    │  └─📦 67d75658c522844d9dd7dc06dfcb35bb-hasura-hasura-hasura
     │     ├─🧩 hasura/graphql-engine:latest
     │     ├─💾 /var/lib/monkd/volumes/growthbook -> /usr/local/src/app/packages/back-end/uploads
     │     └─🔌 open <ip>:8080 (0.0.0.0:8080) -> 8080
-    └─🔩 templates/local/monk-hasura/hasura-db
-       └─📦 a629918e0a1b6bd1632846fd0476e99a-monk-hasura-hasura-db-postgres
+    └─🔩 templates/local/hasura/hasura-db
+       └─📦 a629918e0a1b6bd1632846fd0476e99a-hasura-hasura-db-postgres
           ├─🧩 postgres:latest
           └─🔌 open <db_ip>:5432 (0.0.0.0:5432) -> 5432
 
 💡 You can inspect and manage your above stack with these commands:
- monk logs (-f) local/monk-hasura/stack - Inspect logs
- monk shell     local/monk-hasura/stack - Connect to the container's shell
- monk do        local/monk-hasura/stack/action_name - Run defined action (if exists)
+ monk logs (-f) local/hasura/stack - Inspect logs
+ monk shell     local/hasura/stack - Connect to the container's shell
+ monk do        local/hasura/stack/action_name - Run defined action (if exists)
 💡 Check monk help for more!
 ```
 
@@ -98,5 +98,5 @@ The variables are in `stack.yml` file. You can quickly setup by editing the valu
 ## Stop, remove and clean up workloads and templates
 
 ```bash
-monk purge monk-hasura
+monk purge hasura
 ```

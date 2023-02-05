@@ -1,4 +1,4 @@
-namespace: monk-hasura
+namespace: hasura
 
 hasura:
   metadata:
@@ -11,7 +11,7 @@ hasura:
   defines: runnable
   connections:
     database:
-      runnable: monk-hasura/hasura-db
+      runnable: hasura/hasura-db
       service: hasura-db-svc
   variables:
     hasura_graphql_cnsl:
@@ -48,7 +48,7 @@ hasura:
       type: string
       value: <- `${monk-volume-path}/growthbook`
   containers:
-    monk-hasura:
+    hasura:
       image: 'hasura/graphql-engine'
       ports:
         - <- `0.0.0.0:${hasura_port}:8080`
@@ -57,11 +57,11 @@ hasura:
   depends:
     wait-for:
       runnables:
-        - monk-hasura/hasura-db
+        - hasura/hasura-db
       timeout: 30
   services:
     hasura-svc:
-      container: monk-hasura
+      container: hasura
       port: <- `${hasura_port}`
       protocol: tcp
 
