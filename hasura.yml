@@ -47,6 +47,9 @@ hasura:
     volume_local:
       type: string
       value: <- `${monk-volume-path}/growthbook`
+    hasura_port:
+      type: int
+      port: 8080
   containers:
     hasura:
       image: 'hasura/graphql-engine'
