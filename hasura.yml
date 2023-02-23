@@ -47,11 +47,14 @@ hasura:
     volume_local:
       type: string
       value: <- `${monk-volume-path}/growthbook`
+    hasura_port:
+      type: string
+      port: 8080
   containers:
     hasura:
       image: 'hasura/graphql-engine'
       ports:
-        - <- `0.0.0.0:${hasura_port}:8080`
+        - <- `0.0.0.0:8080:8080`
       paths:
         - <- `${volume_local}:/usr/local/src/app/packages/back-end/uploads`
   depends:
@@ -62,7 +65,7 @@ hasura:
   services:
     hasura-svc:
       container: hasura
-      port: <- `${hasura_port}`
+      port: 8080
       protocol: tcp
 
 hasura-db:
