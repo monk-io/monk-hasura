@@ -69,6 +69,8 @@ hasura:
       protocol: tcp
 
 hasura-db:
+  metadata:
+    private: true
   defines: runnable
   variables:
     defines: variables
