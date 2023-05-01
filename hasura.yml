@@ -66,6 +66,7 @@ hasura:
       container: hasura
       port: 8080
       protocol: tcp
+      host-port: 8080
 
 hasura-db:
   metadata:
