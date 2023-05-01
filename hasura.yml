@@ -53,8 +53,6 @@ hasura:
   containers:
     hasura:
       image: 'hasura/graphql-engine'
-      ports:
-        - <- `0.0.0.0:8080:8080`
       paths:
         - <- `${volume_local}:/usr/local/src/app/packages/back-end/uploads`
   depends:
@@ -98,11 +96,7 @@ hasura-db:
   containers:
     postgres:
       image-tag: <- `${image-tag}`
-      # paths:
-      # - <- `${moncc-volume-path}/db_data:/var/lib/postgresql/data`
       image: postgres
-      ports:
-        - <- `0.0.0.0:${db-port}:5432`
   checks:
     readiness:
       code: |
