@@ -1,3 +1,4 @@
+---
 namespace: hasura
 
 hasura:
@@ -52,7 +53,7 @@ hasura:
       port: 8080
   containers:
     hasura:
-      image: 'hasura/graphql-engine'
+      image: hasura/graphql-engine
       paths:
         - <- `${volume_local}:/usr/local/src/app/packages/back-end/uploads`
   depends:
@@ -112,5 +113,3 @@ hasura-db:
       container: postgres
       port: 5432
       protocol: tcp
-
-
