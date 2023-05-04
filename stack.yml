@@ -2,6 +2,13 @@
 namespace: hasura
 
 stack:
+  metadata:
+    defines: metadata
+    name: Hasura
+    description: Hasura gives you instant GraphQL &amp; REST APIs on new &amp; existing data sources. Connect Hasura to your data &amp; get APIs in under a minute.
+    website: https://hasura.io
+    publisher: monk.io
+    icon: https://hasura.io/brand-assets/hasura-logo-primary-dark.svg
   defines: process-group
   runnable-list:
     - hasura/hasura-db
