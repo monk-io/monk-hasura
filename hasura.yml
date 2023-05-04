@@ -18,29 +18,29 @@ hasura:
     hasura_graphql_cnsl:
       env: HASURA_GRAPHQL_ENABLE_CONSOLE
       type: string
-      value: <- `${hasura_graphql_console}`
+      value: true
     hasura_graphql_dev:
       env: HASURA_GRAPHQL_DEV_MODE
       type: string
-      value: <- `${hasura_graphql_dev_mode}`
+      value: true
     hasura_graphql_log_types:
       env: HASURA_GRAPHQL_ENABLED_LOG_TYPES
       type: string
-      value: <- `${hasura_graphql_enabled_log_types}`
+      value: startup, http-log, webhook-log, websocket-log, query-log
     db_hasura_host:
       type: string
       value: <- connection-hostname("database") split(".dns.podman") join("")
     db_hasura:
       env: HASURA_GRAPHQL_METADATA_DATABASE_URL
       type: string
-      value: <- `postgres://${database_user}:${database_password}@${db_hasura_host}:5432/${database_name}`
+      value: <- `postgres://monk:monk@${db_hasura_host}:5432/monk`
     db_host:
       type: string
       value: <- connection-hostname("database") split(".dns.podman") join("")
     db:
       env: PG_DATABASE_URL
       type: string
-      value: <- `postgres://${database_user}:${database_password}@${db_host}:5432/${database_name}`
+      value: <- `postgres://monk:monk@${db_host}:5432/monk`
     hasura_admin_secret:
       env: HASURA_GRAPHQL_ADMIN_SECRET
       type: string
@@ -48,9 +48,6 @@ hasura:
     volume_local:
       type: string
       value: <- `${monk-volume-path}/growthbook`
-    hasura_port:
-      type: string
-      port: 8080
   containers:
     hasura:
       image: hasura/graphql-engine
@@ -79,18 +76,18 @@ hasura-db:
       value: latest
     db-password:
       env: POSTGRES_PASSWORD
-      value: <- `${database_password}`
+      value: monk
       type: string
     db-user:
       env: POSTGRES_USER
-      value: <- `${database_user}`
+      value: monk
       type: string
     db-name:
       env: POSTGRES_DB
-      value: <- `${database_name}`
+      value: monk
       type: string
     db-port:
-      value: <- `${database_port}`
+      value: 5432
       type: int
     db-trust:
       env: POSTGRES_HOST_AUTH_METHOD
